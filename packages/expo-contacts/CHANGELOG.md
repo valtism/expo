@@ -10,7 +10,7 @@
 
 ### 💡 Others
 
-- [iOS] Migrate to Expo Modules.
+- [iOS] Migrate to Expo Modules. ([#25696](https://github.com/expo/expo/pull/25696) by [@alanjhughes](https://github.com/alanjhughes))
 
 ## 12.8.2 - 2023-12-19
 
