@@ -165,6 +165,8 @@ PODS:
   - ExpoClipboard/Tests (5.0.0):
     - ExpoModulesCore
     - ExpoModulesTestCore
+  - ExpoContacts (12.7.0):
+    - ExpoModulesCore
   - ExpoCrypto (12.8.0):
     - ExpoModulesCore
   - ExpoDevice (5.9.0):
@@ -1444,7 +1446,6 @@ DEPENDENCIES:
   - EXBarCodeScanner (from `../../../packages/expo-barcode-scanner/ios`)
   - EXCalendar (from `../../../packages/expo-calendar/ios`)
   - EXConstants (from `../../../packages/expo-constants/ios`)
-  - EXContacts (from `../../../packages/expo-contacts/ios`)
   - EXFont (from `../../../packages/expo-font/ios`)
   - EXImageLoader (from `../../../packages/expo-image-loader/ios`)
   - EXJSONUtils (from `../../../packages/expo-json-utils/ios`)
@@ -1472,6 +1473,7 @@ DEPENDENCIES:
   - ExpoCellular (from `../../../packages/expo-cellular/ios`)
   - ExpoClipboard (from `../../../packages/expo-clipboard/ios`)
   - ExpoClipboard/Tests (from `../../../packages/expo-clipboard/ios`)
+  - ExpoContacts (from `../../../packages/expo-contacts/ios`)
   - ExpoCrypto (from `../../../packages/expo-crypto/ios`)
   - ExpoDevice (from `../../../packages/expo-device/ios`)
   - ExpoDocumentPicker (from `../../../packages/expo-document-picker/ios`)
@@ -1625,9 +1627,6 @@ EXTERNAL SOURCES:
   EXConstants:
     inhibit_warnings: false
     :path: "../../../packages/expo-constants/ios"
-  EXContacts:
-    inhibit_warnings: false
-    :path: "../../../packages/expo-contacts/ios"
   EXFont:
     inhibit_warnings: false
     :path: "../../../packages/expo-font/ios"
@@ -1687,6 +1686,9 @@ EXTERNAL SOURCES:
   ExpoClipboard:
     inhibit_warnings: false
     :path: "../../../packages/expo-clipboard/ios"
+  ExpoContacts:
+    inhibit_warnings: false
+    :path: "../../../packages/expo-contacts/ios"
   ExpoCrypto:
     inhibit_warnings: false
     :path: "../../../packages/expo-crypto/ios"
@@ -1940,9 +1942,18 @@ SPEC CHECKSUMS:
   EXAV: 69adaa7433e7123a7dc9df9841fd80e954916d2d
   EXBarCodeScanner: 2c2fee40a33902612792b2f0de4e9da40f080613
   EXCalendar: 3c6e6c545f617c89835a10fe251093cf36914b31
+<<<<<<< HEAD
   EXConstants: 86bbc9fedbb67770c0c6bb37f22f81970ef45dc8
   EXContacts: 2ef734aa7b13c8e5ff20fb77d04f1cb172b61456
   EXFont: 9ae7e8e2e4825cef04a45dca74512a3f711e2fe9
+||||||| parent of 86c843db75 ([ios][contact] Migrate to Expo Modules)
+  EXConstants: adcf913f005bb3a6eba1f89c34090bed5a0b89f7
+  EXContacts: 1cf97b2518b2e687b184cf0cb153346cf67fd3aa
+  EXFont: 0a688bc37845f2665376c8c93a822fe5483dae37
+=======
+  EXConstants: adcf913f005bb3a6eba1f89c34090bed5a0b89f7
+  EXFont: 0a688bc37845f2665376c8c93a822fe5483dae37
+>>>>>>> 86c843db75 ([ios][contact] Migrate to Expo Modules)
   EXImageLoader: 55080616b2fe9da19ef8c7f706afd9814e279b6b
   EXJSONUtils: d138005ee11b84fc4e3bf7119a160034db5d5e20
   EXLocation: 4cdbc108ff5bd944d981b7d0c0cf98630104a84a
