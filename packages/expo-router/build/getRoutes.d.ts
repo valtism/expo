@@ -20,6 +20,7 @@ type Options = {
     preserveApiRoutes?: boolean;
     ignoreRequireErrors?: boolean;
     ignoreEntryPoints?: boolean;
+    importMode?: string;
 };
 /** Convert a flat map of file nodes into a nested tree of files. */
 export declare function getRecursiveTree(files: FileNode[]): TreeNode;

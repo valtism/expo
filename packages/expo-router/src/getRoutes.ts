@@ -33,6 +33,7 @@ type Options = {
   preserveApiRoutes?: boolean;
   ignoreRequireErrors?: boolean;
   ignoreEntryPoints?: boolean;
+  importMode?: string;
 };
 
 /** Convert a flat map of file nodes into a nested tree of files. */
@@ -377,6 +378,8 @@ export function assertDuplicateRoutes(filenames: string[]) {
 
 /** Given a Metro context module, return an array of nested routes. */
 export function getRoutes(contextModule: RequireContext, options?: Options): RouteNode | null {
+  options = { importMode: EXPO_ROUTER_IMPORT_MODE, ...options };
+
   const route = getExactRoutesInternal(contextModule, options);
 
   // If there is no route, return an empty route.

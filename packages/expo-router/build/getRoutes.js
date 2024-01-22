@@ -281,6 +281,7 @@ function assertDuplicateRoutes(filenames) {
 exports.assertDuplicateRoutes = assertDuplicateRoutes;
 /** Given a Metro context module, return an array of nested routes. */
 function getRoutes(contextModule, options) {
+    options = { importMode: import_mode_1.default, ...options };
     const route = getExactRoutesInternal(contextModule, options);
     // If there is no route, return an empty route.
     if (!route) {
