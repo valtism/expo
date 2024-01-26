@@ -8,7 +8,6 @@ on:
         required: false
         default: ''
   push:
-    branches: [main, 'sdk-*']
     paths:
       - .github/workflows/sdk.yml
       - tools/**
@@ -29,7 +28,7 @@ concurrency:
 
 jobs:
   check-packages:
-    runs-on: ubuntu-22.04
+    runs-on: expo-large
     steps:
       - name: 👀 Checkout
         uses: actions/checkout@v4

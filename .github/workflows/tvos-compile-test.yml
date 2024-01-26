@@ -6,7 +6,6 @@ on:
     paths:
       - .github/workflows/tvos-compile-test.yml
   push:
-    branches: [main, 'sdk-*']
     paths:
       - .github/workflows/tvos-compile-test.yml
       - packages/@expo/cli/**
@@ -37,7 +36,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-    runs-on: ubuntu-22.04
+    runs-on: expo-large
     timeout-minutes: 60
     env:
       UPDATES_PORT: 4747

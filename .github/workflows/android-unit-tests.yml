@@ -3,7 +3,6 @@ name: Android Unit Tests
 on:
   workflow_dispatch: {}
   push:
-    branches: [main]
     paths:
       - .github/workflows/android-unit-tests.yml
       - apps/expo-go/android/**
@@ -28,7 +27,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: expo-large
     timeout-minutes: 100
     env:
       ORG_GRADLE_PROJECT_reactNativeArchitectures: x86_64
