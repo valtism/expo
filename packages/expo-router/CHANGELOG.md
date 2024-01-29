@@ -8,7 +8,7 @@
 
 - Allow the file extension to be specified for `renderRouter`'s filepaths ([#26510](https://github.com/expo/expo/pull/26510) by [@marklawlor](https://github.com/marklawlor))
 - Add `useNavigationContainerRef` to access the root NavigationContainer ref. ([#26529](https://github.com/expo/expo/pull/26529) by [@EvanBacon](https://github.com/EvanBacon))
-- Add `.pop(), .popToTop() and .canPop()` to `router` APIs.
+- Add `.pop(), .popToTop() and .canPop()` to `router` APIs. ([#26711](https://github.com/expo/expo/pull/26711) by [@marklawlor](https://github.com/marklawlor))
 
 ### 🐛 Bug fixes
 
