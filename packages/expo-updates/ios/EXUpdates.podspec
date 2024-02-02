@@ -69,6 +69,20 @@ Pod::Spec.new do |s|
     }
   end
 
+  if $expo_updates_create_fingerprint != false
+    s.script_phase = {
+      :name => 'Generate fingerprint for expo-updates runtime version if applicable',
+      :script => 'bash -l -c "$PODS_TARGET_SRCROOT/../scripts/create-fingerprint-ios.sh"',
+      :execution_position => :before_compile
+    }
+
+    # Generate EXUpdates.bundle without existing resources
+    # `create-fingerprint-ios.sh` will generate fingerprint in EXUpdates.bundle
+    s.resource_bundles = {
+      'EXUpdates' => []
+    }
+  end
+
   s.exclude_files = 'Tests/'
   s.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'Tests/*.{h,m,swift}'

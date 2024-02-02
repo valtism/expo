@@ -44,21 +44,46 @@ abstract class ExpoUpdatesPlugin : Plugin<Project> {
         it.enabled = !isDebuggableVariant
       }
       variant.sources.assets?.addGeneratedSourceDirectory(createManifestTask, CreateManifestTask::assetDir)
+
+      val createFingerprintTask = project.tasks.register("create${targetName}Fingerprint", CreateFingerprintTask::class.java) {
+        it.description = "expo-updates: Create manifest for ${targetName}."
+        it.projectRoot.set(projectRoot.toString())
+        it.nodeExecutableAndArgs.set(reactExtension.nodeExecutableAndArgs.get())
+        it.enabled = !isDebuggableVariant
+      }
+      variant.sources.assets?.addGeneratedSourceDirectory(createFingerprintTask, CreateFingerprintTask::assetDir)
     }
   }
 
-  abstract class CreateManifestTask : DefaultTask() {
+  abstract class BaseExpoUpdatesTask : DefaultTask() {
     @get:Input
     abstract val projectRoot: Property<String>
-
-    @get:Input
-    abstract val entryFile: Property<String>
 
     @get:Input
     abstract val nodeExecutableAndArgs: ListProperty<String>
 
     @get:OutputDirectory
     abstract val assetDir: DirectoryProperty
+
+    protected fun getExpoUpdatesPackageDir(): String {
+      val stdoutBuffer = ByteArrayOutputStream()
+      project.exec {
+        val args = listOf(*nodeExecutableAndArgs.get().toTypedArray(), "-e", "console.log(require('path').dirname(require.resolve('expo-updates/package.json')));")
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+          it.commandLine("cmd", "/c", *args.toTypedArray())
+        } else {
+          it.commandLine(args)
+        }
+        it.workingDir(projectRoot.get())
+        it.standardOutput = stdoutBuffer
+      }
+      return String(stdoutBuffer.toByteArray()).trim()
+    }
+  }
+
+  abstract class CreateManifestTask : BaseExpoUpdatesTask() {
+    @get:Input
+    abstract val entryFile: Property<String>
 
     @TaskAction
     fun exec() {
@@ -83,20 +108,30 @@ abstract class ExpoUpdatesPlugin : Plugin<Project> {
         it.workingDir(projectRoot)
       }
     }
+  }
 
-    private fun getExpoUpdatesPackageDir(): String {
-      val stdoutBuffer = ByteArrayOutputStream()
+  abstract class CreateFingerprintTask : BaseExpoUpdatesTask() {
+    @TaskAction
+    fun exec() {
+      assetDir.get().asFile.deleteRecursively()
+      assetDir.get().asFile.mkdirs()
       project.exec {
-        val args = listOf(*nodeExecutableAndArgs.get().toTypedArray(), "-e", "console.log(require('path').dirname(require.resolve('expo-updates/package.json')));")
+        val args = mutableListOf<String>().apply {
+          addAll(nodeExecutableAndArgs.get())
+          add("${getExpoUpdatesPackageDir()}/scripts/createFingerprint.js")
+          add("android")
+          add(projectRoot.get())
+          add(assetDir.get().toString())
+        }
+
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
           it.commandLine("cmd", "/c", *args.toTypedArray())
         } else {
           it.commandLine(args)
         }
-        it.workingDir(projectRoot.get())
-        it.standardOutput = stdoutBuffer
+
+        it.workingDir(projectRoot)
       }
-      return String(stdoutBuffer.toByteArray()).trim()
     }
   }
 
