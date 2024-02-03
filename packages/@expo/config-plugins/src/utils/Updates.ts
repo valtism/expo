@@ -86,7 +86,7 @@ export async function getRuntimeVersionAsync(
   if (typeof runtimeVersion === 'string') {
     if (runtimeVersion === FINGERPRINT_RUNTIME_VERSION_SENTINEL) {
       throw new Error(
-        `${FINGERPRINT_RUNTIME_VERSION_SENTINEL} is a reserved value for runtime version. To use a fingerprint runtime version, use the "fingerprintExperimental" runtime version policy.`
+        `${FINGERPRINT_RUNTIME_VERSION_SENTINEL} is a reserved value for runtime version. To use a fingerprint runtime version, use the "fingerprintNativeExperimental" or "fingerprintNonNativeExperimental" runtime version policy.`
       );
     }
     return runtimeVersion;
@@ -99,9 +99,12 @@ export async function getRuntimeVersionAsync(
       throw new Error("An SDK version must be defined when using the 'sdkVersion' runtime policy.");
     }
     return getRuntimeVersionForSDKVersion(config.sdkVersion);
-  } else if (runtimeVersion.policy === 'fingerprintExperimental') {
+  } else if (
+    runtimeVersion.policy === 'fingerprintNativeExperimental' ||
+    runtimeVersion.policy === 'fingerprintNonNativeExperimental'
+  ) {
     console.warn(
-      "Use of the experimental 'fingerprintExperimental' runtime policy may result in unexpected system behavior."
+      `Use of the experimental '${runtimeVersion.policy}' runtime policy may result in unexpected system behavior.`
     );
     return FINGERPRINT_RUNTIME_VERSION_SENTINEL;
   }
@@ -109,7 +112,7 @@ export async function getRuntimeVersionAsync(
   throw new Error(
     `"${
       typeof runtimeVersion === 'object' ? JSON.stringify(runtimeVersion) : runtimeVersion
-    }" is not a valid runtime version. getRuntimeVersionAsync only supports a string, "sdkVersion", "appVersion", "nativeVersion" or "fingerprintExperimental" policy.`
+    }" is not a valid runtime version. getRuntimeVersionAsync only supports a string or one of the following policies: sdkVersion, appVersion, nativeVersion, fingerprintNativeExperimental, fingerprintNonNativeExperimental.`
   );
 }
 

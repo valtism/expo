@@ -34,13 +34,27 @@ function findUpProjectRoot(cwd) {
   });
 
   const runtimeVersion = config[platform]?.runtimeVersion ?? config.runtimeVersion;
-  if (typeof runtimeVersion === 'string' || runtimeVersion.policy !== 'fingerprintExperimental') {
+  if (typeof runtimeVersion === 'string') {
     return;
   }
 
-  const fingerprint = await Fingerprint.createProjectHashAsync(projectRoot, {
-    platforms: [platform],
-  });
+  let fingerprint;
+  if (runtimeVersion.policy === 'fingerprintNativeExperimental') {
+    fingerprint = await Fingerprint.createProjectHashAsync(projectRoot, {
+      platforms: [platform],
+    });
+  } else if (runtimeVersion.policy === 'fingerprintNonNativeExperimental') {
+    // ignore everything in native directories to ensure fingerprint is the same
+    // no matter whether project has been prebuilt
+    fingerprint = await Fingerprint.createProjectHashAsync(projectRoot, {
+      platforms: [platform],
+      ignorePaths: ['/android/**/*', '/ios/**/*'],
+    });
+  } else {
+    // not a policy that needs fingerprinting
+    return;
+  }
+
   fs.writeFileSync(path.join(destinationDir, 'fingerprint'), fingerprint);
 })().catch((e) => {
   // Wrap in regex to make it easier for log parsers (like `@expo/xcpretty`) to find this error.

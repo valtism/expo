@@ -216,12 +216,12 @@ describe(getRuntimeVersionAsync, () => {
   });
   it('throws if runtime version is not parseable', async () => {
     await expect(getRuntimeVersionAsync('', { runtimeVersion: 1 } as any, 'ios')).rejects.toThrow(
-      `"1" is not a valid runtime version. getRuntimeVersionAsync only supports a string, "sdkVersion", "appVersion", "nativeVersion" or "fingerprintExperimental" policy.`
+      `"1" is not a valid runtime version. getRuntimeVersionAsync only supports a string or one of the following policies: sdkVersion, appVersion, nativeVersion, fingerprintNativeExperimental, fingerprintNonNativeExperimental.`
     );
     await expect(
       getRuntimeVersionAsync('', { runtimeVersion: { policy: 'unsupportedPlugin' } } as any, 'ios')
     ).rejects.toThrow(
-      `"{"policy":"unsupportedPlugin"}" is not a valid runtime version. getRuntimeVersionAsync only supports a string, "sdkVersion", "appVersion", "nativeVersion" or "fingerprintExperimental" policy.`
+      `"{"policy":"unsupportedPlugin"}" is not a valid runtime version. getRuntimeVersionAsync only supports a string or one of the following policies: sdkVersion, appVersion, nativeVersion, fingerprintNativeExperimental, fingerprintNonNativeExperimental.`
     );
   });
 });
