@@ -43,6 +43,11 @@
   return _jsObjectPtr;
 }
 
+- (nullable EXJavaScriptRuntime *)runtime
+{
+  return _runtime;
+}
+
 #pragma mark - Accessing object properties
 
 - (BOOL)hasProperty:(nonnull NSString *)name
